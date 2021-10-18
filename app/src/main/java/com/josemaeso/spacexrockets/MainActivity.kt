@@ -1,8 +1,8 @@
-package com.josemaeso.samplecodeproject
+package com.josemaeso.spacexrockets
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.josemaeso.samplecodeproject.ui.list.ListFragment
+import com.josemaeso.spacexrockets.ui.list.ListFragment
 
 class MainActivity : AppCompatActivity() {
 

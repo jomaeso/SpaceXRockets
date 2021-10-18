@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.josemaeso.samplecodeproject.ui.list.ListFragment"
+        android:name="com.josemaeso.spacexrockets.ui.list.ListFragment"
         android:label="list_fragment"
         tools:layout="@layout/list_fragment" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.josemaeso.samplecodeproject.ui.detail.DetailFragment"
+        android:name="com.josemaeso.spacexrockets.ui.detail.DetailFragment"
         android:label="detail_fragment"
         tools:layout="@layout/detail_fragment" />
 </navigation>

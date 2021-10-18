@@ -1,4 +1,4 @@
-package com.josemaeso.samplecodeproject
+package com.josemaeso.spacexrockets
 
 import org.junit.Test
 

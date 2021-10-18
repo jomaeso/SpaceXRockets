@@ -1,4 +1,4 @@
-package com.josemaeso.samplecodeproject.ui.detail
+package com.josemaeso.spacexrockets.ui.detail
 
 import androidx.lifecycle.ViewModel
 
