@@ -8,4 +8,5 @@
     <string name="rocket_status_inactive">Inactive</string>
     <string name="list_fragment_title">SpaceX Rockets</string>
     <string name="detail_fragment_title">Rocket</string>
+    <string name="rocket_status_icon">Rocket status icon</string>
 </resources>

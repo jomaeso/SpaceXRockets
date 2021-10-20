@@ -30,7 +30,9 @@
             app:layout_constraintStart_toStartOf="@+id/rocket_image"
             app:layout_constraintEnd_toEndOf="@+id/rocket_image"
             app:layout_constraintTop_toBottomOf="@id/rocket_image"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -48,6 +50,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintTop_toTopOf="parent"
+                android:textStyle="bold"
                 android:text="@string/rocket_details_status_title"
                 />
             <TextView
@@ -69,6 +72,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintTop_toBottomOf="@id/rocket_status_title"
                 android:layout_marginTop="8dp"
+                android:textStyle="bold"
                 android:text="@string/rocket_details_company_title"
                 />
             <TextView
@@ -91,6 +95,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintTop_toBottomOf="@id/rocket_company_title"
                 android:layout_marginTop="8dp"
+                android:textStyle="bold"
                 android:text="@string/rocket_details_country_title"
                 />
             <TextView

@@ -17,17 +17,40 @@
         android:layout_marginTop="8dp"
         tools:text="SpaceX Rocket Name"
         android:textSize="18sp"
+        android:textColor="@color/black"
         android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/rocket_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/rocket_name"
+        app:layout_constraintTop_toTopOf="@id/rocket_name"
+        app:layout_constraintBottom_toBottomOf="@id/rocket_name"
+        app:srcCompat="@drawable/active_status_icon"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/rocket_status_icon" />
     <TextView
-        android:id="@+id/rocket_description"
+        android:id="@+id/rocket_company"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rocket_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="Long description of the Rocket"
+        android:textStyle="bold"
+        tools:text="SpaceX"
         />
+    <TextView
+        android:id="@+id/rocket_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/rocket_company"
+        app:layout_constraintBottom_toBottomOf="@id/rocket_company"
+        app:layout_constraintStart_toEndOf="@id/rocket_company"
+        android:layout_marginStart="8dp"
+        tools:text="Country"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
