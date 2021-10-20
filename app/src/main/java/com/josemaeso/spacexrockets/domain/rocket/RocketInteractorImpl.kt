@@ -18,13 +18,13 @@ class RocketInteractorImpl(
             rocketLoader.loadRockets()?.let { remoteRockets ->
                 rocketDataSource.insertRockets(remoteRockets.map { remoteRocket ->
                     com.josemaeso.spacexrockets.data.rocket.Rocket(
-                        remoteRocket.rocketId,
+                        remoteRocket.id,
                         remoteRocket.name,
                         remoteRocket.active,
                         remoteRocket.country,
                         remoteRocket.company,
                         remoteRocket.description,
-                        remoteRocket.images
+                        remoteRocket.flickr_images
                     )
                 })
             }
@@ -37,13 +37,13 @@ class RocketInteractorImpl(
             rocketLoader.loadRocket(id)?.let { remoteRocket ->
                 rocketDataSource.insertRocket(
                     com.josemaeso.spacexrockets.data.rocket.Rocket(
-                        remoteRocket.rocketId,
+                        remoteRocket.id,
                         remoteRocket.name,
                         remoteRocket.active,
                         remoteRocket.country,
                         remoteRocket.company,
                         remoteRocket.description,
-                        remoteRocket.images
+                        remoteRocket.flickr_images
                     )
                 )
             }
