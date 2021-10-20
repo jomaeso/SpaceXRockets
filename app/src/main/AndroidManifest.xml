@@ -13,6 +13,7 @@
         android:theme="@style/Theme.SpaceXRockets">
         <activity
             android:name="com.josemaeso.spacexrockets.MainActivity"
+            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_SpaceXRockets)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
