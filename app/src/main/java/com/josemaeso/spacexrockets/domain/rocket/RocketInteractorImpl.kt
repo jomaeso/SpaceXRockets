@@ -4,6 +4,7 @@ import com.josemaeso.spacexrockets.data.rocket.RocketDataSource
 import com.josemaeso.spacexrockets.domain.rocket.loader.RocketLoader
 import com.josemaeso.spacexrockets.domain.rocket.model.Rocket
 import com.josemaeso.spacexrockets.domain.rocket.model.RocketMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -14,7 +15,7 @@ class RocketInteractorImpl(
     private val rocketDataSource: RocketDataSource
 ) : RocketInteractor {
     override fun getRockets(): Flow<List<Rocket>> {
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             rocketLoader.loadRockets()?.let { remoteRockets ->
                 rocketDataSource.insertRockets(remoteRockets.map { remoteRocket ->
                     com.josemaeso.spacexrockets.data.rocket.Rocket(
@@ -33,7 +34,7 @@ class RocketInteractorImpl(
     }
 
     override fun getRocket(id: String): Flow<Rocket> {
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             rocketLoader.loadRocket(id)?.let { remoteRocket ->
                 rocketDataSource.insertRocket(
                     com.josemaeso.spacexrockets.data.rocket.Rocket(
