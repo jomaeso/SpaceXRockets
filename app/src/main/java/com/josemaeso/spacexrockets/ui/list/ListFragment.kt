@@ -37,7 +37,8 @@ class ListFragment : Fragment(), RocketListAdapter.RocketListItemListener {
 
         viewModel.selectedRocket.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { rocket ->
-                val action = ListFragmentDirections.actionListFragmentToDetailFragment(rocket.rocketId)
+                val action =
+                    ListFragmentDirections.actionListFragmentToDetailFragment(rocket.rocketId)
                 findNavController().navigate(action)
             }
         }
