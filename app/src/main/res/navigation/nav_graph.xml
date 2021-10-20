@@ -20,15 +20,22 @@
                 android:name="rocketId"
                 android:defaultValue=''
                 app:argType="string" />
+            <argument
+                android:name="name"
+                app:argType="string" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.josemaeso.spacexrockets.ui.detail.DetailFragment"
-        android:label="@string/detail_fragment_title"
+        android:label="{name}"
         tools:layout="@layout/detail_fragment">
         <argument
             android:name="rocketId"
+            app:argType="string"
+            />
+        <argument
+            android:name="name"
             app:argType="string"
             />
     </fragment>
