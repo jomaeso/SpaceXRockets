@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SpaceXRockets</string>
+    <string name="rocket_detail_image_description">Image of the rocket</string>
+    <string name="rocket_details_status_title">Status:</string>
+    <string name="rocket_details_company_title">Company:</string>
+    <string name="rocket_details_country_title">Country:</string>
+    <string name="rocket_status_active">Active</string>
+    <string name="rocket_status_inactive">Inactive</string>
+    <string name="list_fragment_title">SpaceX Rockets</string>
+    <string name="detail_fragment_title">Rocket</string>
 </resources>
