@@ -13,8 +13,12 @@ class Converters {
 
     @TypeConverter
     fun fromJsonToStringList(value: String): List<String> {
-        val gson = Gson()
-        val listType = object : TypeToken<List<String>>() {}.type
-        return gson.fromJson(value, listType)
+        return try {
+            val gson = Gson()
+            val listType = object : TypeToken<List<String>>() {}.type
+            gson.fromJson(value, listType)
+        } catch (e: Exception) {
+            listOf()
+        }
     }
 }
