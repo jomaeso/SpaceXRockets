@@ -1,7 +1,7 @@
 package com.josemaeso.spacexrockets.domain.rocket
 
 import com.josemaeso.spacexrockets.data.rocket.RocketDataSource
-import com.josemaeso.spacexrockets.domain.rocket.loader.RocketLoader
+import com.josemaeso.spacexrockets.data.rocket.loader.RocketLoader
 import com.josemaeso.spacexrockets.domain.rocket.model.Rocket
 import com.josemaeso.spacexrockets.domain.rocket.model.RocketMapper
 import kotlinx.coroutines.Dispatchers

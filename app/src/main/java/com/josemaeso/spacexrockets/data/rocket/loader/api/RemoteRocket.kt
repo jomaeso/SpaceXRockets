@@ -1,4 +1,4 @@
-package com.josemaeso.spacexrockets.domain.rocket.loader.api
+package com.josemaeso.spacexrockets.data.rocket.loader.api
 
 typealias ImageUrl = String
 

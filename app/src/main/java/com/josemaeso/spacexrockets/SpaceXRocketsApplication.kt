@@ -5,8 +5,8 @@ import com.josemaeso.spacexrockets.data.RoomDatabase
 import com.josemaeso.spacexrockets.data.rocket.RocketRepository
 import com.josemaeso.spacexrockets.domain.rocket.RocketInteractor
 import com.josemaeso.spacexrockets.domain.rocket.RocketInteractorImpl
-import com.josemaeso.spacexrockets.domain.rocket.loader.HttpRocketLoader
-import com.josemaeso.spacexrockets.domain.rocket.loader.api.SpaceXApiService
+import com.josemaeso.spacexrockets.data.rocket.loader.HttpRocketLoader
+import com.josemaeso.spacexrockets.data.rocket.loader.api.SpaceXApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

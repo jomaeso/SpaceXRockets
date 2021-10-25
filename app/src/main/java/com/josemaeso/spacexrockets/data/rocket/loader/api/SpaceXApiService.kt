@@ -1,4 +1,4 @@
-package com.josemaeso.spacexrockets.domain.rocket.loader.api
+package com.josemaeso.spacexrockets.data.rocket.loader.api
 
 import retrofit2.Call
 import retrofit2.http.GET

@@ -1,7 +1,7 @@
-package com.josemaeso.spacexrockets.domain.rocket.loader
+package com.josemaeso.spacexrockets.data.rocket.loader
 
-import com.josemaeso.spacexrockets.domain.rocket.loader.api.RemoteRocket
-import com.josemaeso.spacexrockets.domain.rocket.loader.api.SpaceXApiService
+import com.josemaeso.spacexrockets.data.rocket.loader.api.RemoteRocket
+import com.josemaeso.spacexrockets.data.rocket.loader.api.SpaceXApiService
 
 class HttpRocketLoader(private val apiService: SpaceXApiService) :
     RocketLoader {
