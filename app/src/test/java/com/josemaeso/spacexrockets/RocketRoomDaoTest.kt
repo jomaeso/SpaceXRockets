@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.josemaeso.spacexrockets.data.AppDatabase
-import com.josemaeso.spacexrockets.data.rocket.Rocket
+import com.josemaeso.spacexrockets.data.rocket.RocketRoom
 import com.josemaeso.spacexrockets.data.rocket.RocketDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -17,7 +17,7 @@ import org.robolectric.RobolectricTestRunner
 import java.io.IOException
 
 @RunWith(RobolectricTestRunner::class)
-class RocketDaoTest {
+class RocketRoomDaoTest {
     private lateinit var rocketDao: RocketDao
     private lateinit var db: AppDatabase
 
@@ -41,26 +41,26 @@ class RocketDaoTest {
     @Test
     @Throws(IOException::class)
     fun test_insertAndGetById_notEmpty() = runBlocking {
-        val rocket: Rocket = RocketDataTestUtil.createRocket()
+        val rocketRoom: RocketRoom = RocketDataTestUtil.createRocketRocketRoom()
         val sut = makeSUT()
 
-        sut.insert(rocket)
-        val byId = sut.getById(rocket.rocketId).first()
+        sut.insert(rocketRoom)
+        val byId = sut.getById(rocketRoom.rocketId).first()
 
-        assertEquals(rocket, byId)
+        assertEquals(rocketRoom, byId)
     }
 
     @Test
     @Throws(IOException::class)
     fun test_insertAndGetById_replacesInserted() = runBlocking {
-        val rocket: Rocket = RocketDataTestUtil.createRocket()
+        val rocketRoom: RocketRoom = RocketDataTestUtil.createRocketRocketRoom()
         val sut = makeSUT()
 
-        sut.insert(rocket)
-        sut.insert(rocket)
-        val byId = sut.getById(rocket.rocketId).first()
+        sut.insert(rocketRoom)
+        sut.insert(rocketRoom)
+        val byId = sut.getById(rocketRoom.rocketId).first()
 
-        assertEquals(rocket, byId)
+        assertEquals(rocketRoom, byId)
     }
 
     @Test
@@ -78,9 +78,9 @@ class RocketDaoTest {
     fun test_insertListAndGetAll() = runBlocking {
         val sut = makeSUT()
         val rockets = listOf(
-            RocketDataTestUtil.createRocket(),
-            RocketDataTestUtil.createRocket(),
-            RocketDataTestUtil.createRocket()
+            RocketDataTestUtil.createRocketRocketRoom(),
+            RocketDataTestUtil.createRocketRocketRoom(),
+            RocketDataTestUtil.createRocketRocketRoom()
         )
 
         sut.insert(rockets)
@@ -94,9 +94,9 @@ class RocketDaoTest {
     fun test_insertListAndGetAll_replacesAll() = runBlocking {
         val sut = makeSUT()
         val rockets = listOf(
-            RocketDataTestUtil.createRocket(),
-            RocketDataTestUtil.createRocket(),
-            RocketDataTestUtil.createRocket()
+            RocketDataTestUtil.createRocketRocketRoom(),
+            RocketDataTestUtil.createRocketRocketRoom(),
+            RocketDataTestUtil.createRocketRocketRoom()
         )
 
         sut.insert(rockets)
@@ -111,9 +111,9 @@ class RocketDaoTest {
     fun test_insertListAndGetAll_orderedByName() = runBlocking {
         val sut = makeSUT()
         val rockets = listOf(
-            RocketDataTestUtil.createRocket(name = "B Rocket"),
-            RocketDataTestUtil.createRocket(name = "C Rocket"),
-            RocketDataTestUtil.createRocket(name = "A Rocket")
+            RocketDataTestUtil.createRocketRocketRoom(name = "B Rocket"),
+            RocketDataTestUtil.createRocketRocketRoom(name = "C Rocket"),
+            RocketDataTestUtil.createRocketRocketRoom(name = "A Rocket")
         )
 
         sut.insert(rockets)

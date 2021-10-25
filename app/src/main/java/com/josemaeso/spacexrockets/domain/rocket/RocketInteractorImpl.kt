@@ -1,39 +1,34 @@
 package com.josemaeso.spacexrockets.domain.rocket
 
-import com.josemaeso.spacexrockets.data.rocket.RocketDataSource
-import com.josemaeso.spacexrockets.data.rocket.loader.RocketLoader
 import com.josemaeso.spacexrockets.domain.rocket.model.Rocket
-import com.josemaeso.spacexrockets.domain.rocket.model.RocketMapper
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class RocketInteractorImpl(
     private val rocketLoader: RocketLoader,
-    private val rocketDataSource: RocketDataSource
+    private val rocketWriteDataSource: RocketWriteDataSource,
+    private val rocketReadDataSource: RocketReadDataSource,
+    private val scope: CoroutineScope,
+    private val dispatcher: CoroutineDispatcher
 ) : RocketInteractor {
     override fun getRockets(): Flow<List<Rocket>> {
-        GlobalScope.launch(Dispatchers.IO) {
-            rocketLoader.loadRockets()?.let { remoteRockets ->
-                rocketDataSource.insertRockets(remoteRockets.map { remoteRocket ->
-                    RocketMapper.reverseMapApi(remoteRocket)
-                })
+        scope.launch(dispatcher) {
+            rocketLoader.loadRockets().let { remoteRockets ->
+                rocketWriteDataSource.insertRockets(remoteRockets)
             }
         }
-        return rocketDataSource.getRockets().map { RocketMapper.reverseMapList(it) }
+        return rocketReadDataSource.getRockets()
     }
 
     override fun getRocket(id: String): Flow<Rocket> {
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launch(dispatcher) {
             rocketLoader.loadRocket(id)?.let { remoteRocket ->
-                rocketDataSource.insertRocket(
-                    RocketMapper.reverseMapApi(remoteRocket)
-                )
+                rocketWriteDataSource.insertRocket(remoteRocket)
             }
         }
 
-        return rocketDataSource.getRocket(id).map { RocketMapper.reverseMap(it) }
+        return rocketReadDataSource.getRocket(id)
     }
 }

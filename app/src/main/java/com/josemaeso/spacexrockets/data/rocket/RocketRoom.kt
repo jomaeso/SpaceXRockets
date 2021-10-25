@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 typealias ImageUrl = String
 
 @Entity
-data class Rocket(
+data class RocketRoom(
     @PrimaryKey val rocketId: String,
     val name: String,
     val active: Boolean,

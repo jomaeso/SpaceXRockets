@@ -1,10 +1,13 @@
 package com.josemaeso.spacexrockets
 
-import com.josemaeso.spacexrockets.data.rocket.Rocket
+import com.josemaeso.spacexrockets.data.rocket.RocketRoom
 import com.josemaeso.spacexrockets.data.rocket.RocketDao
 import com.josemaeso.spacexrockets.data.rocket.RocketRepository
+import com.josemaeso.spacexrockets.domain.rocket.model.RocketMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,40 +18,47 @@ import org.mockito.Mockito.*
 import org.mockito.runners.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class RocketRepositoryTest {
+class RocketRoomRepositoryTest {
 
     @Mock
     private lateinit var rocketDaoMock: RocketDao
 
     @Captor
-    private lateinit var rocketCaptor: ArgumentCaptor<Rocket>
+    private lateinit var rocketRoomCaptor: ArgumentCaptor<RocketRoom>
 
     @Captor
-    private lateinit var rocketListCaptor: ArgumentCaptor<List<Rocket>>
+    private lateinit var rocketRoomListCaptor: ArgumentCaptor<List<RocketRoom>>
 
     @Test
-    fun test_getRockets_correct() {
+    fun test_getRockets_correct() = runBlocking {
         val sut = makeSUT(rocketDaoMock)
-        val flowRockets: Flow<List<Rocket>> = flow { listOf(RocketDataTestUtil.createRocket()) }
+        val rocketId = "id1"
+        val flowRockets: Flow<List<RocketRoom>> =
+            flow { emit(listOf(RocketDataTestUtil.createRocketRocketRoom(rocketId = rocketId))) }
         `when`(rocketDaoMock.getAll()).thenReturn(flowRockets)
 
         val rockets = sut.getRockets()
 
         verify(rocketDaoMock, times(1)).getAll()
-        Assert.assertEquals(flowRockets, rockets)
+        Assert.assertEquals(
+            rocketId,
+            rockets.first()[0].rocketId
+        )
     }
 
     @Test
-    fun test_getRocketById_correct() {
+    fun test_getRocketById_correct() = runBlocking {
         val sut = makeSUT(rocketDaoMock)
-        val flowRocket: Flow<Rocket> = flow { RocketDataTestUtil.createRocket() }
-        val rocketId = "an Id"
-        `when`(rocketDaoMock.getById(rocketId)).thenReturn(flowRocket)
+
+        val rocketId = "id2"
+        val flowRocketRoom: Flow<RocketRoom> =
+            flow { emit(RocketDataTestUtil.createRocketRocketRoom(rocketId = rocketId)) }
+        `when`(rocketDaoMock.getById(rocketId)).thenReturn(flowRocketRoom)
 
         val rocket = sut.getRocket(rocketId)
 
         verify(rocketDaoMock, times(1)).getById(rocketId)
-        Assert.assertEquals(flowRocket, rocket)
+        Assert.assertEquals(rocketId, rocket.first().rocketId)
     }
 
     @Test
@@ -58,8 +68,8 @@ class RocketRepositoryTest {
 
         sut.insertRocket(rocket)
 
-        verify(rocketDaoMock, times(1)).insert(MockitoUtils.capture(rocketCaptor))
-        Assert.assertEquals(rocket, rocketCaptor.value)
+        verify(rocketDaoMock, times(1)).insert(MockitoUtils.capture(rocketRoomCaptor))
+        Assert.assertEquals(rocket.rocketId, rocketRoomCaptor.value.rocketId)
     }
 
     @Test
@@ -73,11 +83,11 @@ class RocketRepositoryTest {
 
         sut.insertRockets(rockets)
 
-        verify(rocketDaoMock, times(1)).insert(MockitoUtils.capture(rocketListCaptor))
-        Assert.assertEquals(rockets, rocketListCaptor.value)
+        verify(rocketDaoMock, times(1)).insert(MockitoUtils.capture(rocketRoomListCaptor))
+        Assert.assertEquals(rockets.map { it.rocketId }, rocketRoomListCaptor.value.map { it.rocketId })
     }
 
     private fun makeSUT(rocketDao: RocketDao): RocketRepository {
-        return RocketRepository(rocketDao)
+        return RocketRepository(rocketDao, RocketMapper())
     }
 }

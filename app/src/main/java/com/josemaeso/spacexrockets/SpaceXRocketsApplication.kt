@@ -7,6 +7,9 @@ import com.josemaeso.spacexrockets.domain.rocket.RocketInteractor
 import com.josemaeso.spacexrockets.domain.rocket.RocketInteractorImpl
 import com.josemaeso.spacexrockets.data.rocket.loader.HttpRocketLoader
 import com.josemaeso.spacexrockets.data.rocket.loader.api.SpaceXApiService
+import com.josemaeso.spacexrockets.domain.rocket.model.RocketMapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -16,8 +19,11 @@ class SpaceXRocketsApplication : Application() {
         super.onCreate()
 
         rocketInteractor = RocketInteractorImpl(
-            HttpRocketLoader(retrofitLoader()),
-            RocketRepository(RoomDatabase.getDatabase(applicationContext).rocketDao())
+            HttpRocketLoader(retrofitLoader(), RocketMapper()),
+            RocketRepository(RoomDatabase.getDatabase(applicationContext).rocketDao(), RocketMapper()),
+            RocketRepository(RoomDatabase.getDatabase(applicationContext).rocketDao(), RocketMapper()),
+            GlobalScope,
+            Dispatchers.IO
         )
     }
 
