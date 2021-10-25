@@ -18,10 +18,11 @@ class SpaceXRocketsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        val rocketDao = RoomDatabase.getDatabase(applicationContext).rocketDao()
         rocketInteractor = RocketInteractorImpl(
             HttpRocketLoader(retrofitLoader(), RocketMapper()),
-            RocketRepository(RoomDatabase.getDatabase(applicationContext).rocketDao(), RocketMapper()),
-            RocketRepository(RoomDatabase.getDatabase(applicationContext).rocketDao(), RocketMapper()),
+            RocketRepository(rocketDao, RocketMapper()),
+            RocketRepository(rocketDao, RocketMapper()),
             GlobalScope,
             Dispatchers.IO
         )

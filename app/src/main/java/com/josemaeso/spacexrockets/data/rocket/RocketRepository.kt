@@ -16,11 +16,11 @@ class RocketRepository(private val rocketDao: RocketDao, private val mapper: Roc
         return rocketDao.getById(id).map { mapper.reverseMap(it) }
     }
 
-    override fun insertRockets(rockets: List<Rocket>) {
+    override suspend fun insertRockets(rockets: List<Rocket>) {
         rocketDao.insert(mapper.mapList(rockets))
     }
 
-    override fun insertRocket(rocket: Rocket) {
+    override suspend fun insertRocket(rocket: Rocket) {
         rocketDao.insert(mapper.map(rocket))
     }
 }
