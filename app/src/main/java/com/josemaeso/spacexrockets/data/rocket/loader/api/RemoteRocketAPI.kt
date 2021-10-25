@@ -2,7 +2,7 @@ package com.josemaeso.spacexrockets.data.rocket.loader.api
 
 typealias ImageUrl = String
 
-data class RemoteRocket(
+data class RemoteRocketAPI(
     val id: String,
     val name: String,
     val active: Boolean,

@@ -1,5 +1,6 @@
 package com.josemaeso.spacexrockets.domain.rocket.model
 
+import com.josemaeso.spacexrockets.data.rocket.loader.api.RemoteRocketAPI
 import com.josemaeso.spacexrockets.data.rocket.Rocket as RocketDto
 
 class RocketMapper {
@@ -25,6 +26,18 @@ class RocketMapper {
                 rocket.company,
                 rocket.description,
                 rocket.images
+            )
+        }
+
+        fun reverseMapApi(remoteRocket: RemoteRocketAPI): RocketDto {
+            return RocketDto(
+                remoteRocket.id,
+                remoteRocket.name,
+                remoteRocket.active,
+                remoteRocket.country,
+                remoteRocket.company,
+                remoteRocket.description,
+                remoteRocket.flickr_images
             )
         }
 

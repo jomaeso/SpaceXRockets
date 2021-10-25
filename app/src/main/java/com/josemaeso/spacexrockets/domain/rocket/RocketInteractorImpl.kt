@@ -18,15 +18,7 @@ class RocketInteractorImpl(
         GlobalScope.launch(Dispatchers.IO) {
             rocketLoader.loadRockets()?.let { remoteRockets ->
                 rocketDataSource.insertRockets(remoteRockets.map { remoteRocket ->
-                    com.josemaeso.spacexrockets.data.rocket.Rocket(
-                        remoteRocket.id,
-                        remoteRocket.name,
-                        remoteRocket.active,
-                        remoteRocket.country,
-                        remoteRocket.company,
-                        remoteRocket.description,
-                        remoteRocket.flickr_images
-                    )
+                    RocketMapper.reverseMapApi(remoteRocket)
                 })
             }
         }
@@ -37,15 +29,7 @@ class RocketInteractorImpl(
         GlobalScope.launch(Dispatchers.IO) {
             rocketLoader.loadRocket(id)?.let { remoteRocket ->
                 rocketDataSource.insertRocket(
-                    com.josemaeso.spacexrockets.data.rocket.Rocket(
-                        remoteRocket.id,
-                        remoteRocket.name,
-                        remoteRocket.active,
-                        remoteRocket.country,
-                        remoteRocket.company,
-                        remoteRocket.description,
-                        remoteRocket.flickr_images
-                    )
+                    RocketMapper.reverseMapApi(remoteRocket)
                 )
             }
         }
