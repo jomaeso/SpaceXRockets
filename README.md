@@ -1,4 +1,4 @@
-# SpaceX Rockets
+# 🚀SpaceX Rockets🚀
 ### Android sample project 👨‍💻
 
 A sample project of app architecture, using [SpaceX API](https://github.com/r-spacex/SpaceX-API) with a list of the current Rockets and a detail of them using the latest components.
