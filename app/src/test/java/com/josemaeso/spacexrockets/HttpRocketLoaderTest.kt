@@ -1,38 +1,33 @@
 package com.josemaeso.spacexrockets
 
 import com.josemaeso.spacexrockets.data.rocket.loader.HttpRocketLoader
-import com.josemaeso.spacexrockets.data.rocket.loader.api.RemoteRocketAPI
 import com.josemaeso.spacexrockets.data.rocket.loader.api.SpaceXApiService
 import com.josemaeso.spacexrockets.domain.rocket.model.RocketMapper
-import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.runners.MockitoJUnitRunner
-import retrofit2.Call
+import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.whenever
 import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
-class HttpRocketRoomLoaderTest {
+class HttpRocketLoaderTest {
 
     @Mock
-    private lateinit var apiService: SpaceXApiService
-    @Mock
-    private lateinit var callRockets: Call<List<RemoteRocketAPI>>
-    @Mock
-    private lateinit var callRocket: Call<RemoteRocketAPI?>
+    private lateinit var apiServiceMock: SpaceXApiService
 
     @Test
-    fun test_listRockets_success() {
+    fun test_listRockets_success() = runBlocking {
         val remoteRocketsAPI = listOf(
             RemoteRocketTestUtils.createRemoteRocketAPI(),
             RemoteRocketTestUtils.createRemoteRocketAPI(),
             RemoteRocketTestUtils.createRemoteRocketAPI()
         )
-        `when`(callRockets.execute()).thenReturn(Response.success(remoteRocketsAPI))
-        `when`(apiService.listRockets()).thenReturn(callRockets)
-        val sut = makeSUT(apiService)
+
+        whenever(apiServiceMock.listRockets()).thenReturn(Response.success(remoteRocketsAPI))
+        val sut = makeSUT(apiServiceMock)
 
         val remoteRockets = sut.loadRockets()
 

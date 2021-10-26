@@ -15,7 +15,7 @@ import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mockito.runners.MockitoJUnitRunner
+import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class RocketRoomRepositoryTest {
@@ -62,7 +62,7 @@ class RocketRoomRepositoryTest {
     }
 
     @Test
-    fun test_insertRocket_correct() {
+    fun test_insertRocket_correct() = runBlocking {
         val sut = makeSUT(rocketDaoMock)
         val rocket = RocketDataTestUtil.createRocket()
 
@@ -73,7 +73,7 @@ class RocketRoomRepositoryTest {
     }
 
     @Test
-    fun test_insertRockets_correct() {
+    fun test_insertRockets_correct() = runBlocking {
         val sut = makeSUT(rocketDaoMock)
         val rockets = listOf(
             RocketDataTestUtil.createRocket(),
@@ -84,7 +84,9 @@ class RocketRoomRepositoryTest {
         sut.insertRockets(rockets)
 
         verify(rocketDaoMock, times(1)).insert(MockitoUtils.capture(rocketRoomListCaptor))
-        Assert.assertEquals(rockets.map { it.rocketId }, rocketRoomListCaptor.value.map { it.rocketId })
+        Assert.assertEquals(
+            rockets.map { it.rocketId },
+            rocketRoomListCaptor.value.map { it.rocketId })
     }
 
     private fun makeSUT(rocketDao: RocketDao): RocketRepository {
