@@ -1,7 +1,8 @@
-package com.josemaeso.spacexrockets.domain.rocket.model
+package com.josemaeso.spacexrockets.data
 
 import com.josemaeso.spacexrockets.data.rocket.loader.api.RemoteRocketAPI
 import com.josemaeso.spacexrockets.data.rocket.RocketRoom
+import com.josemaeso.spacexrockets.domain.rocket.model.Rocket
 
 class RocketMapper {
     fun map(rocket: Rocket): RocketRoom {

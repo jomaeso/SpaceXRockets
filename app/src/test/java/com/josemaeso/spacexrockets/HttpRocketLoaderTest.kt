@@ -2,11 +2,12 @@ package com.josemaeso.spacexrockets
 
 import com.josemaeso.spacexrockets.data.rocket.loader.HttpRocketLoader
 import com.josemaeso.spacexrockets.data.rocket.loader.api.SpaceXApiService
-import com.josemaeso.spacexrockets.domain.rocket.model.RocketMapper
+import com.josemaeso.spacexrockets.data.RocketMapper
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -20,6 +21,13 @@ class HttpRocketLoaderTest {
     @Mock
     private lateinit var apiServiceMock: SpaceXApiService
 
+    private lateinit var sut: HttpRocketLoader
+
+    @Before
+    fun setup() {
+        sut = HttpRocketLoader(apiServiceMock, RocketMapper())
+    }
+
     @Test
     fun test_listRockets_success() = runBlocking {
         val remoteRocketsAPI = listOf(
@@ -29,7 +37,6 @@ class HttpRocketLoaderTest {
         )
 
         whenever(apiServiceMock.listRockets()).thenReturn(Response.success(remoteRocketsAPI))
-        val sut = makeSUT(apiServiceMock)
 
         val remoteRockets = sut.loadRockets()
 
@@ -39,7 +46,6 @@ class HttpRocketLoaderTest {
     @Test
     fun test_listRockets_successEmpty() = runBlocking {
         whenever(apiServiceMock.listRockets()).thenReturn(Response.success(listOf()))
-        val sut = makeSUT(apiServiceMock)
 
         val remoteRockets = sut.loadRockets()
 
@@ -55,7 +61,6 @@ class HttpRocketLoaderTest {
                 ResponseBody.create(null, "")
             )
         )
-        val sut = makeSUT(apiServiceMock)
 
         val remoteRockets = sut.loadRockets()
 
@@ -70,7 +75,6 @@ class HttpRocketLoaderTest {
 
 
         whenever(apiServiceMock.getRocket(rocketId)).thenReturn(Response.success(remoteRocketAPI))
-        val sut = makeSUT(apiServiceMock)
 
         val remoteRocket = sut.loadRocket(rocketId)
 
@@ -81,7 +85,6 @@ class HttpRocketLoaderTest {
     fun test_loadRocket_successEmpty() = runBlocking {
         val rocketId = "remoteId"
         whenever(apiServiceMock.getRocket(rocketId)).thenReturn(Response.success(null))
-        val sut = makeSUT(apiServiceMock)
 
         val remoteRocket = sut.loadRocket(rocketId)
 
@@ -97,14 +100,9 @@ class HttpRocketLoaderTest {
                 ResponseBody.create(null, "")
             )
         )
-        val sut = makeSUT(apiServiceMock)
 
         val remoteRocket = sut.loadRocket(rocketId)
 
         assertEquals(null, remoteRocket)
-    }
-
-    private fun makeSUT(apiService: SpaceXApiService): HttpRocketLoader {
-        return HttpRocketLoader(apiService, RocketMapper())
     }
 }

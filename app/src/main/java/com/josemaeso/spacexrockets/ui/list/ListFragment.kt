@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.josemaeso.spacexrockets.R
 import com.josemaeso.spacexrockets.SpaceXRocketsApplication
 import com.josemaeso.spacexrockets.domain.rocket.model.Rocket
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.list_fragment.*
 
+@AndroidEntryPoint
 class ListFragment : Fragment(), RocketListAdapter.RocketListItemListener {
 
-    private val viewModel: ListViewModel by viewModels { ListViewModelFactory((activity?.application as SpaceXRocketsApplication).rocketInteractor) }
+    private val viewModel: ListViewModel by viewModels()
     private val rocketAdapter = RocketListAdapter(this)
 
     override fun onCreateView(

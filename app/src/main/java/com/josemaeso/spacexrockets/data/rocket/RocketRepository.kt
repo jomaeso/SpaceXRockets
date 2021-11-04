@@ -2,7 +2,7 @@ package com.josemaeso.spacexrockets.data.rocket
 
 import com.josemaeso.spacexrockets.domain.rocket.RocketReadDataSource
 import com.josemaeso.spacexrockets.domain.rocket.RocketWriteDataSource
-import com.josemaeso.spacexrockets.domain.rocket.model.RocketMapper
+import com.josemaeso.spacexrockets.data.RocketMapper
 import com.josemaeso.spacexrockets.domain.rocket.model.Rocket
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

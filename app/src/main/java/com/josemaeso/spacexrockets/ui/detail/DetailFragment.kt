@@ -10,18 +10,18 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.josemaeso.spacexrockets.R
 import com.josemaeso.spacexrockets.SpaceXRocketsApplication
+import com.josemaeso.spacexrockets.ui.loader.UIImageLoader
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.detail_fragment.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    private val args: DetailFragmentArgs by navArgs()
-    private val viewModel: DetailViewModel by viewModels {
-        DetailViewModelFactory(
-            args.rocketId,
-            (activity?.application as SpaceXRocketsApplication).rocketInteractor
-        )
-    }
+    @Inject
+    lateinit var imageLoader: UIImageLoader
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,9 +50,11 @@ class DetailFragment : Fragment() {
                     )
                 )
                 if (rocket.images.isNotEmpty()) {
-                    Picasso.get().load(rocket.images.first())
-                        .placeholder(R.drawable.rocket_place_holder).fit().centerCrop()
-                        .into(rocket_image)
+                    imageLoader.loadImage(
+                        rocket.images.first(),
+                        rocket_image,
+                        R.drawable.rocket_place_holder
+                    )
                 }
             }
         }

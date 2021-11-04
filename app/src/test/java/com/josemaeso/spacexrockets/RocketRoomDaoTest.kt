@@ -18,7 +18,7 @@ import java.io.IOException
 
 @RunWith(RobolectricTestRunner::class)
 class RocketRoomDaoTest {
-    private lateinit var rocketDao: RocketDao
+    private lateinit var sut: RocketDao
     private lateinit var db: AppDatabase
 
     @Before
@@ -29,7 +29,7 @@ class RocketRoomDaoTest {
         )
             .allowMainThreadQueries()
             .build()
-        rocketDao = db.rocketDao()
+        sut = db.rocketDao()
     }
 
     @After
@@ -42,7 +42,6 @@ class RocketRoomDaoTest {
     @Throws(IOException::class)
     fun test_insertAndGetById_notEmpty() = runBlocking {
         val rocketRoom: RocketRoom = RocketDataTestUtil.createRocketRocketRoom()
-        val sut = makeSUT()
 
         sut.insert(rocketRoom)
         val byId = sut.getById(rocketRoom.rocketId).first()
@@ -54,7 +53,6 @@ class RocketRoomDaoTest {
     @Throws(IOException::class)
     fun test_insertAndGetById_replacesInserted() = runBlocking {
         val rocketRoom: RocketRoom = RocketDataTestUtil.createRocketRocketRoom()
-        val sut = makeSUT()
 
         sut.insert(rocketRoom)
         sut.insert(rocketRoom)
@@ -66,7 +64,6 @@ class RocketRoomDaoTest {
     @Test
     @Throws(IOException::class)
     fun test_getById_empty() = runBlocking {
-        val sut = makeSUT()
 
         val byId = sut.getById("").first()
 
@@ -76,7 +73,6 @@ class RocketRoomDaoTest {
     @Test
     @Throws(IOException::class)
     fun test_insertListAndGetAll() = runBlocking {
-        val sut = makeSUT()
         val rockets = listOf(
             RocketDataTestUtil.createRocketRocketRoom(),
             RocketDataTestUtil.createRocketRocketRoom(),
@@ -92,7 +88,6 @@ class RocketRoomDaoTest {
     @Test
     @Throws(IOException::class)
     fun test_insertListAndGetAll_replacesAll() = runBlocking {
-        val sut = makeSUT()
         val rockets = listOf(
             RocketDataTestUtil.createRocketRocketRoom(),
             RocketDataTestUtil.createRocketRocketRoom(),
@@ -109,7 +104,6 @@ class RocketRoomDaoTest {
     @Test
     @Throws(IOException::class)
     fun test_insertListAndGetAll_orderedByName() = runBlocking {
-        val sut = makeSUT()
         val rockets = listOf(
             RocketDataTestUtil.createRocketRocketRoom(name = "B Rocket"),
             RocketDataTestUtil.createRocketRocketRoom(name = "C Rocket"),
@@ -121,9 +115,5 @@ class RocketRoomDaoTest {
         val resultRockets = sut.getAll().first()
 
         assertEquals(rockets.sortedBy { it.name }, resultRockets)
-    }
-
-    private fun makeSUT(): RocketDao {
-        return rocketDao
     }
 }

@@ -3,12 +3,13 @@ package com.josemaeso.spacexrockets
 import com.josemaeso.spacexrockets.data.rocket.RocketRoom
 import com.josemaeso.spacexrockets.data.rocket.RocketDao
 import com.josemaeso.spacexrockets.data.rocket.RocketRepository
-import com.josemaeso.spacexrockets.domain.rocket.model.RocketMapper
+import com.josemaeso.spacexrockets.data.RocketMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
@@ -29,9 +30,15 @@ class RocketRoomRepositoryTest {
     @Captor
     private lateinit var rocketRoomListCaptor: ArgumentCaptor<List<RocketRoom>>
 
+    private lateinit var sut: RocketRepository
+
+    @Before
+    fun setup() {
+        sut = RocketRepository(rocketDaoMock, RocketMapper())
+    }
+
     @Test
     fun test_getRockets_correct() = runBlocking {
-        val sut = makeSUT(rocketDaoMock)
         val rocketId = "id1"
         val flowRockets: Flow<List<RocketRoom>> =
             flow { emit(listOf(RocketDataTestUtil.createRocketRocketRoom(rocketId = rocketId))) }
@@ -48,8 +55,6 @@ class RocketRoomRepositoryTest {
 
     @Test
     fun test_getRocketById_correct() = runBlocking {
-        val sut = makeSUT(rocketDaoMock)
-
         val rocketId = "id2"
         val flowRocketRoom: Flow<RocketRoom> =
             flow { emit(RocketDataTestUtil.createRocketRocketRoom(rocketId = rocketId)) }
@@ -63,7 +68,6 @@ class RocketRoomRepositoryTest {
 
     @Test
     fun test_insertRocket_correct() = runBlocking {
-        val sut = makeSUT(rocketDaoMock)
         val rocket = RocketDataTestUtil.createRocket()
 
         sut.insertRocket(rocket)
@@ -74,7 +78,6 @@ class RocketRoomRepositoryTest {
 
     @Test
     fun test_insertRockets_correct() = runBlocking {
-        val sut = makeSUT(rocketDaoMock)
         val rockets = listOf(
             RocketDataTestUtil.createRocket(),
             RocketDataTestUtil.createRocket(),
@@ -87,9 +90,5 @@ class RocketRoomRepositoryTest {
         Assert.assertEquals(
             rockets.map { it.rocketId },
             rocketRoomListCaptor.value.map { it.rocketId })
-    }
-
-    private fun makeSUT(rocketDao: RocketDao): RocketRepository {
-        return RocketRepository(rocketDao, RocketMapper())
     }
 }
