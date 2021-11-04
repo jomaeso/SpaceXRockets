@@ -5,6 +5,7 @@ A sample project of app architecture, using [SpaceX API](https://github.com/r-sp
 
 ## Remarkable points
 - 🎨 Material Design
+- 💉 Dependency Injection with Hilt
 - 👓 View Model
 - ⚡ Live Data
 - 🌊 Flow
