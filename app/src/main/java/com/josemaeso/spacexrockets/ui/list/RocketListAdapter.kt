@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.josemaeso.spacexrockets.R
+import com.josemaeso.spacexrockets.databinding.RocketListItemBinding
 import com.josemaeso.spacexrockets.domain.rocket.model.Rocket
 
-class RocketListAdapter(private val listener: RocketListItemListener): ListAdapter<Rocket, RocketListViewHolder>(DiffCallback()) {
+class RocketListAdapter(private val listener: RocketListItemListener) :
+    ListAdapter<Rocket, RocketListViewHolder>(DiffCallback()) {
 
     interface RocketListItemListener {
         fun onRocketItemClick(rocket: Rocket)
@@ -23,9 +25,8 @@ class RocketListAdapter(private val listener: RocketListItemListener): ListAdapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RocketListViewHolder {
-        val view = LayoutInflater.from(parent.context).
-        inflate(R.layout.rocket_list_item, parent, false) as View
-        return RocketListViewHolder(view, listener)
+        val binding = RocketListItemBinding.inflate(LayoutInflater.from(parent.context))
+        return RocketListViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: RocketListViewHolder, position: Int) {
